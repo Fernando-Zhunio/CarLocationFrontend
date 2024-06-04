@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { authGuard, guestGuard } from './shared/guards/auth.guard';
+import { DefaultLayoutComponent } from './core/layouts/default-layout/default-layout.component';
 
 const routes: Routes = [
   // {
@@ -23,7 +25,19 @@ const routes: Routes = [
   {
     path: 'authentication',
     loadChildren: () => import('./modules/authentication/authentication.module').then(m => m.AuthenticationModule),
+    canActivate: [guestGuard]
   },
+  {
+    path: '',
+    component: DefaultLayoutComponent,
+    canActivate: [authGuard],
+    children: [
+      {
+        path: 'home',
+        loadChildren: () => import('./modules/home/home.module').then(m => m.HomeModule),
+      },
+    ],
+  }
   // {
   //   path: 'setting-management',
   //   loadChildren: () =>

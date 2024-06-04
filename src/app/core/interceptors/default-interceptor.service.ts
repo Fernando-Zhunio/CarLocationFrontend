@@ -63,12 +63,12 @@ export class DefaultInterceptorService implements HttpInterceptor {
   }
 
   openSnackBar(message: string, option: MatSnackBarConfig = {} ) {
-    this.snackBar.open(message, 'Cerrar', {
-      duration: 4000,
-      horizontalPosition: 'end',
-      verticalPosition: 'top',
-      ...option
-    });
+    // this.snackBar.open(message, 'Cerrar', {
+    //   duration: 4000,
+    //   horizontalPosition: 'end',
+    //   verticalPosition: 'top',
+    //   ...option
+    // });
   }
 
   // generateHeader() {
