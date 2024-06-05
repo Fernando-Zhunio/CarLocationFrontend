@@ -3,6 +3,7 @@ import { EventBusService } from './event-bus.service';
 import { HttpService } from 'src/app/shared/services/http.service';
 import { catchError, map, of, tap } from 'rxjs';
 import { Router } from '@angular/router';
+import { IUser } from '../types/user';
 
 
 export interface ILoginRequest {
@@ -23,9 +24,9 @@ export class AuthService {
   redirectAuthUrl = '/'
   redirectGuestUrl = 'authentication/login'
 
-  user: any = null
-
+  user: IUser | null = null
   token: string | null = null
+  
   constructor(private http: HttpService, private router: Router) { 
     EventBusService.on(this.slugLogoutEvent, () => {
       console.log('logout')
@@ -80,7 +81,7 @@ export class AuthService {
     if (this.getToken()) {
       return this.http.get('api/app/test/user')
       .pipe(
-        map((res) => {
+        map((res: IUser) => {
           console.log(res)
           AuthService.isAuth = true
           this.user = res

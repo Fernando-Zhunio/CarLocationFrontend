@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { AuthService } from '../../services/auth-service.service';
 
 @Component({
   selector: 'app-default-layout',
@@ -10,6 +11,9 @@ import { RouterModule } from '@angular/router';
   templateUrl: './default-layout.component.html',
   styleUrl: './default-layout.component.scss'
 })
-export class DefaultLayoutComponent {
+export class DefaultLayoutComponent  {
 
+  constructor(
+    private authService: AuthService
+  ) {}
 }
