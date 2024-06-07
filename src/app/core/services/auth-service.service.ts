@@ -4,6 +4,7 @@ import { HttpService } from 'src/app/shared/services/http.service';
 import { catchError, map, of, tap } from 'rxjs';
 import { Router } from '@angular/router';
 import { IUser } from '../types/user';
+import { GET_USER_INFO_ENDPOINT } from 'src/app/modules/authentication/endpoints/authentication.endpoints';
 
 
 export interface ILoginRequest {
@@ -79,7 +80,7 @@ export class AuthService {
 
   verifiedAuth() {
     if (this.getToken()) {
-      return this.http.get('api/app/test/user')
+      return this.http.get(GET_USER_INFO_ENDPOINT)
       .pipe(
         map((res: IUser) => {
           console.log(res)
@@ -100,6 +101,10 @@ export class AuthService {
       this.router.navigate([this.redirectGuestUrl])
       return of(null)
     }
+  }
+
+  getUser() {
+    return this.user
   }
 
 }

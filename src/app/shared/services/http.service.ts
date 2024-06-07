@@ -15,19 +15,19 @@ export class HttpService {
     return this.url+'/' + path;
   }
 
-  get(path: string, options: IOptionsRequest = {}) {
-    return this.http.get(this.getBuildUrl(path), {...options});
+  get<T = any>(path: string, options: IOptionsRequest = {}) {
+    return this.http.get<T>(this.getBuildUrl(path), {...options});
   }
 
-  post(path: string, body: any, options: IOptionsRequest = {}) {
-    return this.http.post(this.getBuildUrl(path), body, {...options});
+  post<T = any>(path: string, body: any, options: IOptionsRequest = {}) {
+    return this.http.post<T>(this.getBuildUrl(path), body, {...options});
   }
 
-  put(path: string, body: any, options: IOptionsRequest = {}) {
-    return this.http.put(this.getBuildUrl(path), body, {...options});
+  put<T = any>(path: string, body: any, options: IOptionsRequest = {}) {
+    return this.http.put<T>(this.getBuildUrl(path), body, {...options});
   }
 
-  delete(url: string, options: IOptionsRequest = {}) {
-    return this.http.delete(this.getBuildUrl(url), {...options});
+  delete<T = any>(url: string, options: IOptionsRequest = {}) {
+    return this.http.delete<T>(this.getBuildUrl(url), {...options});
   }
 }

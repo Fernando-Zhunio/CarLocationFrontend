@@ -1,1 +1,11 @@
-<p>home works!</p>
+<h2>Mis Carros</h2> 
+<button mat-mini-fab><mat-icon>add</mat-icon></button>
+<mat-list dense>
+    @for (car of cars; track car.id) {
+        <mat-list-item>
+            {{car.plate}}
+        </mat-list-item>
+        } @empty {
+        <li>There are no items.</li>
+        }
+</mat-list>

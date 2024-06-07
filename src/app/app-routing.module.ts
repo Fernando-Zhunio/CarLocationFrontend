@@ -29,6 +29,11 @@ const routes: Routes = [
   },
   {
     path: '',
+    pathMatch: 'full',
+    redirectTo: 'home',
+  },
+  {
+    path: '',
     component: DefaultLayoutComponent,
     canActivate: [authGuard],
     children: [
@@ -37,6 +42,10 @@ const routes: Routes = [
         loadChildren: () => import('./modules/home/home.module').then(m => m.HomeModule),
       },
     ],
+  },
+  {
+    path: '**',
+    redirectTo: 'home',
   }
   // {
   //   path: 'setting-management',

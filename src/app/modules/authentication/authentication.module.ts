@@ -7,6 +7,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { AuthenticationRoutingModule } from './authentication.routing';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+
 @NgModule({
   declarations: [
     LoginComponent,
@@ -20,7 +22,8 @@ import { MatInputModule } from '@angular/material/input';
     MatCardModule,
     MatButtonModule,
     MatFormFieldModule,
-    MatInputModule
+    MatInputModule,
+    MatCheckboxModule
   ]
 })
 export class AuthenticationModule { }

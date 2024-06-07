@@ -15,6 +15,7 @@ export class LoginComponent {
   form = new FormGroup({
     username: new FormControl('admin', [Validators.required]),
     password: new FormControl('Fernando1991.', [Validators.required]),
+    rememberMe: new FormControl(false)
   });
 
   constructor(private authService: AuthService, private router: Router) {}
