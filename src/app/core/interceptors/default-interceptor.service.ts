@@ -12,7 +12,9 @@ import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
 export class DefaultInterceptorService implements HttpInterceptor {
 
   token = null;
-  constructor() {
+  constructor(
+    private snackBar: MatSnackBar
+  ) {
     this.token = localStorage.getItem('access_token') || '';
   }
 
@@ -33,42 +35,22 @@ export class DefaultInterceptorService implements HttpInterceptor {
 
     return next.handle(request).pipe(
       catchError((err) => {
-        if (err.status === 401) {
-          
-          const message = err?.error?.message;
+          const message = err?.error?.message || 'No eres tu somos nosotros, vuelve a intentarlo';
           if (message) {
             this.openSnackBar(message);
           }
           throw err;
-        }
-        if (err.status === 422) {
-          const message = err?.error?.message;
-          if (message) {
-            this.openSnackBar(message);
-          }
-          throw err;
-        }
-        if (err.status === 500) {
-          const message = 'No eres tu somos nosotros, vuelve a intentarlo';
-          if (message) {
-            this.openSnackBar(message);
-          }
-          throw err;
-        }
-        // return throwError(() => err);
-        throw err;
-
       }),
     );
   }
 
   openSnackBar(message: string, option: MatSnackBarConfig = {} ) {
-    // this.snackBar.open(message, 'Cerrar', {
-    //   duration: 4000,
-    //   horizontalPosition: 'end',
-    //   verticalPosition: 'top',
-    //   ...option
-    // });
+    this.snackBar.open(message, 'Cerrar', {
+      duration: 4000,
+      horizontalPosition: 'end',
+      verticalPosition: 'top',
+      ...option
+    });
   }
 
   // generateHeader() {

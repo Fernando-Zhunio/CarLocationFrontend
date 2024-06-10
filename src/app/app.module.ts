@@ -23,6 +23,7 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { AuthService } from './core/services/auth-service.service';
 import { Observable, catchError, of, tap } from 'rxjs';
 import { DefaultInterceptorService } from './core/interceptors/default-interceptor.service';
+import { provideNativeDateAdapter } from '@angular/material/core';
 
 
 function initializeApp(authService: AuthService): () => Observable<any> {
@@ -77,6 +78,7 @@ function initializeApp(authService: AuthService): () => Observable<any> {
       useClass: DefaultInterceptorService,
       multi: true,
     },
+    provideNativeDateAdapter(),
   ]
 })
 export class AppModule {}

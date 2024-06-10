@@ -5,6 +5,11 @@ import { MatListModule } from '@angular/material/list';
 import { HomeComponent } from './pages/home/home.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import {MatChipsModule} from '@angular/material/chips';
+import { MatDividerModule } from '@angular/material/divider';
+import { NgxMapboxGLModule } from 'ngx-mapbox-gl';
+import { environment } from 'src/environments/environment';
+
 @NgModule({
   declarations: [
     HomeComponent
@@ -16,6 +21,11 @@ import { MatIconModule } from '@angular/material/icon';
     MatListModule,
     MatButtonModule,
     MatIconModule,
+    MatChipsModule,
+    MatDividerModule,
+    NgxMapboxGLModule.withConfig({
+      accessToken: environment.apis.mapbox.token,
+    })
   ]
 })
 export class HomeModule { }

@@ -1,0 +1,33 @@
+<h1 matDialogTitle>{{ isEdit ? 'Editando Carro' : 'Creando Carro' }}</h1>
+
+<mat-dialog-content>
+  <form class="grid grid-cols-2 gap-2" [formGroup]="form" (ngSubmit)="saveInServer()">
+    <mat-form-field>
+      <mat-label>Placa</mat-label>
+      <input matInput placeholder="Ingrese la placa" formControlName="plate" />
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Color</mat-label>
+      <input matInput placeholder="Ingrese nombre del color" formControlName="color" />
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Año</mat-label>
+      <input matInput placeholder="Ingrese año del carro" formControlName="birthday" />
+    </mat-form-field>
+    <mat-form-field class="w-full">
+      <mat-label>Seleccione una fecha</mat-label>
+      <input matInput [matDatepicker]="picker" />
+      <mat-hint>MM/DD/YYYY</mat-hint>
+      <mat-datepicker-toggle type="button" matIconSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+    <mat-slide-toggle formControlName="isActive">
+        Esta activo
+      </mat-slide-toggle>
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <button color="warn" mat-button matDialogClose>Cerrar</button>
+  <button color="primary" (click)="saveInServer()" mat-button>Guardar</button>
+</mat-dialog-actions>

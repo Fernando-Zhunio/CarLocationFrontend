@@ -3,5 +3,5 @@ export interface ICar {
     plate: string;
     color: string;
     birthday: string;
-    status: boolean;
+    isActive: boolean;
 }

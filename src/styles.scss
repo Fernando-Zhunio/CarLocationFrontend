@@ -1,5 +1,4 @@
 
-
 // Custom Theming for Angular Material
 // For more information: https://material.angular.io/guide/theming
 @use '@angular/material' as mat;
@@ -37,7 +36,15 @@ $CarLocation-theme: mat.define-light-theme((
 @tailwind components;
 @tailwind utilities;
 @include mat.all-component-themes($CarLocation-theme);
+@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
 
+
+* {
+  font-family: "Nunito", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: normal;
+  font-style: normal;
+}
 /* You can add global styles to this file, and also import other style files */
 
 @keyframes donut-spin {
@@ -52,6 +59,8 @@ $CarLocation-theme: mat.define-light-theme((
 //   --lpx-logo: url('/assets/images/logo/logo-light.png');
 //   --lpx-logo-icon: url('/assets/images/logo/logo-light-thumbnail.png');
 // }
+@import '~mapbox-gl/dist/mapbox-gl.css';
+
 .donut {
   display: inline-block;
   border: 4px solid rgba(0, 0, 0, 0.1);
@@ -73,6 +82,9 @@ $CarLocation-theme: mat.define-light-theme((
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
+// .mapboxgl-ctrl.mapboxgl-ctrl-attrib.mapboxgl-compact {
+//   display: none !important;
+// }
 .center {
   display: flex;
   justify-content: center;
