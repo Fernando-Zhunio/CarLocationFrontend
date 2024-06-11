@@ -22,7 +22,6 @@
   <div class="col-span-4 flex flex-col">
     <div class="flex items-center gap-2">
       <h2 class="text-3xl font-bold">Ubicación</h2>
-      <!-- <button mat-mini-fab (click)="openCreateOrEditDialog()"><mat-icon>add</mat-icon></button> -->
     </div>
     <div class="shadow-md rounded-xl p-3 grow overflow-hidden">
       <mgl-map
@@ -46,5 +45,7 @@
         <mgl-control mglScale></mgl-control>
       </mgl-map>
     </div>
+
+    <button (click)="sendMessage()">enviar mensaje</button>
   </div>
 </div>

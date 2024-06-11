@@ -8,10 +8,16 @@ import { AuthenticationRoutingModule } from './authentication.routing';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import {MatCheckboxModule} from '@angular/material/checkbox';
+import { RegisterComponent } from './pages/register/register.component';
+import { AuthLayoutComponent } from './pages/layouts/auth-layout/auth-layout.component';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
   declarations: [
     LoginComponent,
+    RegisterComponent,
+    AuthLayoutComponent
   ],
   imports: [
     CommonModule,
@@ -23,7 +29,9 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
     MatButtonModule,
     MatFormFieldModule,
     MatInputModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    MatDividerModule,
+    MatIconModule,
   ]
 })
 export class AuthenticationModule { }

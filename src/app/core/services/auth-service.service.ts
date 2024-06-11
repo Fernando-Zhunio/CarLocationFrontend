@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { EventBusService } from './event-bus.service';
 import { HttpService } from 'src/app/shared/services/http.service';
-import { catchError, map, of, tap } from 'rxjs';
+import { catchError, map, mergeMap, of, tap } from 'rxjs';
 import { Router } from '@angular/router';
 import { IUser } from '../types/user';
 import { GET_USER_INFO_ENDPOINT } from 'src/app/modules/authentication/endpoints/authentication.endpoints';
@@ -29,6 +29,7 @@ export class AuthService {
   token: string | null = null
   
   constructor(private http: HttpService, private router: Router) { 
+    this.getToken();
     EventBusService.on(this.slugLogoutEvent, () => {
       console.log('logout')
       this.logout()
@@ -59,11 +60,13 @@ export class AuthService {
         'Content-Type': 'application/x-www-form-urlencoded'
       }
     }).pipe(
-      map((res) => {
+      mergeMap((res) => {
         localStorage.setItem('access_token', res['access_token']);
         this.token = res['access_token'];
         AuthService.isAuth = true
-      })
+        return this.verifiedAuth();
+      }),
+
     );
   }
 
@@ -101,6 +104,14 @@ export class AuthService {
       this.router.navigate([this.redirectGuestUrl])
       return of(null)
     }
+  }
+
+  register(body: any){
+    return this.http.post('api/Account/Register', {...body, appName: 'CarLocation'}).pipe(
+      mergeMap((res) => {
+        return this.login(body)
+      })
+    )
   }
 
   getUser() {

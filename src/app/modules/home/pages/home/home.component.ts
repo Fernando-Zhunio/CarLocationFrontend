@@ -6,6 +6,9 @@ import { ICar } from 'src/app/core/types/car';
 import { MatDialog } from '@angular/material/dialog';
 import { CreateOrEditCarDialogComponent } from 'src/app/modules/cars/create-or-edit-car-dialog/create-or-edit-car-dialog.component';
 import * as signalR from '@microsoft/signalr';
+import { environment } from 'src/environments/environment';
+import { SignalR } from 'src/app/shared/tools/signalr';
+import { AuthService } from 'src/app/core/services/auth-service.service';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -13,15 +16,18 @@ import * as signalR from '@microsoft/signalr';
 })
 export class HomeComponent implements OnInit {
   cars: ICar[] = [];
-
+  signalR = new SignalR();
   geolocationPosition: GeolocationPosition | undefined;
 
-  constructor(private httpService: HttpService, private dialog: MatDialog) {}
+  constructor(private authService: AuthService, private httpService: HttpService, private dialog: MatDialog) {}
 
   ngOnInit(): void {
     this.getCars();
     this.getCurrentPosition();
-    this.connectionWebsocket();
+    this.signalR.connection(this.authService.getToken());
+    this.signalR.listener('ReceiveMessage', (user, message) => {
+      console.log({ user, message });
+    })
   }
 
   getCurrentPosition() {
@@ -30,18 +36,14 @@ export class HomeComponent implements OnInit {
       const timeoutVal = 10 * 1000 * 1000; // set a timeout value for the query
       navigator.geolocation.getCurrentPosition(
         this.getCoordinatesCallback.bind(this),
-
         error => {
-          // what to do if query fails:
           const errors = {
             1: 'Permission denied',
             2: 'Position unavailable',
             3: 'Request timeout',
           };
-
-          alert('Error: ' + errors[error.code]); // print the error
+          alert('Error: ' + errors[error.code]);
         },
-        // these 3 parameters are very important, especially the first one
         { enableHighAccuracy: true, timeout: timeoutVal, maximumAge: 0 }
       );
     } else {
@@ -92,27 +94,8 @@ export class HomeComponent implements OnInit {
       });
   }
 
-  connectionWebsocket() {
-    const connection = new signalR.HubConnectionBuilder()
-      .withUrl('/messaging')
-      .configureLogging(signalR.LogLevel.Information)
-      .build();
-
-    async function start() {
-      try {
-        await connection.start();
-        console.log('SignalR Connected.');
-      } catch (err) {
-        console.log(err);
-        setTimeout(start, 5000);
-      }
-    }
-
-    connection.onclose(async () => {
-      await start();
-    });
-
-    // Start the connection.
-    start();
+  sendMessage() {
+    this.signalR.sendMessage('test').then(res => console.log(res));
   }
+
 }

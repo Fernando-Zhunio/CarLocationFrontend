@@ -3,11 +3,23 @@ import { CommonModule } from '@angular/common';
 // import { LoginComponent } from '@abp/ng.account';
 import { RouterModule } from '@angular/router';
 import { LoginComponent } from './pages/login/login.component';
+import { AuthLayoutComponent } from './pages/layouts/auth-layout/auth-layout.component';
+import { RegisterComponent } from './pages/register/register.component';
 
 const routes = [
   {
-    path: 'login',
-    component: LoginComponent
+    path: '',
+    component: AuthLayoutComponent,
+    children: [
+      {
+        path: 'login',
+        component: LoginComponent
+      },
+      {
+        path: 'register',
+        component: RegisterComponent
+      }
+    ]
   },
   // {
   //   path: 'register',

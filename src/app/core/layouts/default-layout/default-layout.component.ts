@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { AuthService } from '../../services/auth-service.service';
+// import { AuthService } from '../../services/auth-service.service';
 import { IUserCurrent } from '../../types/user';
+// import { AuthService as AuthServiceAbp } from '@abp/ng.core';
+import { AuthService } from '../../services/auth-service.service';
 
 @Component({
   selector: 'app-default-layout',
@@ -12,7 +14,23 @@ import { IUserCurrent } from '../../types/user';
 })
 export class DefaultLayoutComponent {
   user!: IUserCurrent;
+  isLoading = false;
   constructor(private authService: AuthService) {
     this.user = this.authService.getUser();
+  }
+
+  logout() {
+    // this.authServiceAbp.logout();
+    return
+    console.log('logout');
+    if(this.isLoading) {
+      return;
+    }
+    this.isLoading = true;
+    this.authService.logout().subscribe({
+      next: () => {},
+      error: (error) => {
+        this.isLoading = false;
+      }});
   }
 }

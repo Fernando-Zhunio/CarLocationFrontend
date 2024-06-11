@@ -1,0 +1,11 @@
+.dropdown-fz {
+    top: 33px;
+    max-width: 300px;
+    z-index: 120;
+    min-width: 150px;
+}
+
+
+.menu-fz:hover .dropdown-fz {
+    display: flex;
+}

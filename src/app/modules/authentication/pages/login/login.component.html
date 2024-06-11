@@ -1,27 +1,36 @@
-<div class="min-h-screen center p-5 w-full">
-  <div>
-    <form (ngSubmit)="saveInServer()" [formGroup]="form">
-      <mat-card>
-        <mat-card-header>
-          <mat-card-title>Login</mat-card-title>
-          <mat-card-subtitle>Inicio de sesión</mat-card-subtitle>
-        </mat-card-header>
-        <!-- <img matCardImage src="Card wide image source"> -->
-        <mat-card-content> 
-            <mat-form-field class="w-full">
-                <mat-label>Usuario</mat-label>
-                <input matInput placeholder="Ingrese su usuario" formControlName="username">
-            </mat-form-field>
-            <mat-form-field class="w-full">
-                <mat-label>Contraseña</mat-label>
-                <input matInput placeholder="Ingrese su contraseña" formControlName="password">
-            </mat-form-field>
-            <mat-checkbox formControlName="rememberMe">Recordar</mat-checkbox>
-        </mat-card-content>
-        <mat-card-actions align="start">
-          <button type="submit" mat-raised-button color="primary">Iniciar sesión</button>
-        </mat-card-actions>
-      </mat-card>
-    </form>
-  </div>
-</div>
+<form (ngSubmit)="saveInServer()" [formGroup]="form">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Inicio de sesión</mat-card-title>
+      <!-- <mat-card-subtitle>Formulario</mat-card-subtitle> -->
+      </mat-card-header>
+      <mat-card-content>
+        <mat-divider class="pb-3 mt-2"></mat-divider>
+        <div class="flex flex-col">
+        <mat-form-field class="w-full">
+          <mat-label>Usuario</mat-label>
+          <input matInput placeholder="Ingrese su usuario" formControlName="username" />
+        </mat-form-field>
+        <mat-form-field class="w-full">
+          <mat-label>Contraseña</mat-label>
+          <input matInput placeholder="Ingrese su contraseña" formControlName="password" />
+        </mat-form-field>
+        <mat-checkbox formControlName="rememberMe">Recordar</mat-checkbox>
+      </div>
+    </mat-card-content>
+    <mat-card-actions align="start">
+      <div class="flex flex-col gap-2 items-center w-full">
+        <button class="w-full" type="submit" mat-raised-button color="primary">Iniciar sesión</button>
+        <button
+          class="w-full"
+          type="button"
+          [routerLink]="['/authentication/register']"
+          mat-raised-button
+          color="accent"
+        >
+         Ir a Registrarme
+        </button>
+      </div>
+    </mat-card-actions>
+  </mat-card>
+</form>

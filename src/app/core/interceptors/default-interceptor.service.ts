@@ -5,6 +5,7 @@ import { Observable, catchError, tap, throwError } from 'rxjs';
 // import { AuthService } from 'src/app/shared/services/auth.service';
 // import { getCsrfToken } from '../helpers/token';
 import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
+import { IError403 } from '../types/errors';
 
 @Injectable({
   providedIn: 'root'
@@ -35,10 +36,13 @@ export class DefaultInterceptorService implements HttpInterceptor {
 
     return next.handle(request).pipe(
       catchError((err) => {
-          const message = err?.error?.message || 'No eres tu somos nosotros, vuelve a intentarlo';
-          if (message) {
-            this.openSnackBar(message);
+          console.log(err);
+          let message = 'No eres tu somos nosotros, vuelve a intentarlo';
+          if (err.status === 403) {
+            message = (err.error.error as IError403).message
           }
+          //const message = err?.error?.message;
+          this.openSnackBar(message);
           throw err;
       }),
     );
