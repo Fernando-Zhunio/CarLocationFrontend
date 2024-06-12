@@ -41,12 +41,16 @@ const routes: Routes = [
         path: 'home',
         loadChildren: () => import('./modules/home/home.module').then(m => m.HomeModule),
       },
+      {
+        path: 'cars',
+        loadChildren: () => import('./modules/cars/car.module').then(m => m.CarModule),
+      }
     ],
   },
-  {
-    path: '**',
-    redirectTo: 'home',
-  }
+  // {
+  //   path: '**',
+  //   redirectTo: 'home',
+  // }
   // {
   //   path: 'setting-management',
   //   loadChildren: () =>

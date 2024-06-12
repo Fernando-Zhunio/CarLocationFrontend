@@ -5,15 +5,16 @@ import { catchError, map, mergeMap, of, tap } from 'rxjs';
 import { Router } from '@angular/router';
 import { IUser } from '../types/user';
 import { GET_USER_INFO_ENDPOINT } from 'src/app/modules/authentication/endpoints/authentication.endpoints';
+import { GetToken } from 'src/app/shared/tools/common-tools';
+import { FastInfo } from '../helpers/fastInfo';
+import { CoreService } from './core.service';
 
 
 export interface ILoginRequest {
-  // grant_type: string,
-  // scope: string,
-  // client_id: string,
   username: string,
   password: string
 }
+
 @Injectable({
   providedIn: 'root'
 })
@@ -26,10 +27,8 @@ export class AuthService {
   redirectGuestUrl = 'authentication/login'
 
   user: IUser | null = null
-  token: string | null = null
   
-  constructor(private http: HttpService, private router: Router) { 
-    this.getToken();
+  constructor(private http: HttpService, private router: Router, private coreService: CoreService) { 
     EventBusService.on(this.slugLogoutEvent, () => {
       console.log('logout')
       this.logout()
@@ -42,10 +41,6 @@ export class AuthService {
 
   static getAuth(): boolean {
     return this.isAuth;
-  }
-
-  getToken() {
-    return this.token || localStorage.getItem('access_token') || null;
   }
 
   login(body: ILoginRequest) {
@@ -62,11 +57,10 @@ export class AuthService {
     }).pipe(
       mergeMap((res) => {
         localStorage.setItem('access_token', res['access_token']);
-        this.token = res['access_token'];
+        //this.token = res['access_token'];
         AuthService.isAuth = true
-        return this.verifiedAuth();
+        return this.coreService.verifiedAuth();
       }),
-
     );
   }
 
@@ -74,37 +68,13 @@ export class AuthService {
     return this.http.get('connect/logout').pipe(
       tap((res) => {
         localStorage.removeItem('access_token');
-        this.token = null;
         AuthService.isAuth = false
         this.router.navigate(['authentication/login'])
       })
     )
   }
 
-  verifiedAuth() {
-    if (this.getToken()) {
-      return this.http.get(GET_USER_INFO_ENDPOINT)
-      .pipe(
-        map((res: IUser) => {
-          console.log(res)
-          AuthService.isAuth = true
-          this.user = res
-          this.router.navigate([this.redirectAuthUrl])
-          return res
-        }),
-        catchError((error) => {
-          console.log(error)
-          AuthService.isAuth = false
-          this.user = null
-          this.router.navigate([this.redirectGuestUrl])
-          return of(null)
-        })
-      )
-    } else {
-      this.router.navigate([this.redirectGuestUrl])
-      return of(null)
-    }
-  }
+  
 
   register(body: any){
     return this.http.post('api/Account/Register', {...body, appName: 'CarLocation'}).pipe(

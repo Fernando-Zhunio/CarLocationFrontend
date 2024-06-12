@@ -3,7 +3,8 @@ import { RouterModule } from '@angular/router';
 // import { AuthService } from '../../services/auth-service.service';
 import { IUserCurrent } from '../../types/user';
 // import { AuthService as AuthServiceAbp } from '@abp/ng.core';
-import { AuthService } from '../../services/auth-service.service';
+import { AuthService } from '../../services/auth.service';
+import { FastInfo } from '../../helpers/fastInfo';
 
 @Component({
   selector: 'app-default-layout',
@@ -16,7 +17,7 @@ export class DefaultLayoutComponent {
   user!: IUserCurrent;
   isLoading = false;
   constructor(private authService: AuthService) {
-    this.user = this.authService.getUser();
+    this.user = FastInfo.Instance.getUser();
   }
 
   logout() {

@@ -4,11 +4,10 @@ import { GET_CARS_ENDPOINT } from '../../endpoints/car.endpoints';
 import { IResponseCreateOrEditDialog, IResponsePaginator } from 'src/app/core/types/response';
 import { ICar } from 'src/app/core/types/car';
 import { MatDialog } from '@angular/material/dialog';
-import { CreateOrEditCarDialogComponent } from 'src/app/modules/cars/create-or-edit-car-dialog/create-or-edit-car-dialog.component';
-import * as signalR from '@microsoft/signalr';
-import { environment } from 'src/environments/environment';
-import { SignalR } from 'src/app/shared/tools/signalr';
-import { AuthService } from 'src/app/core/services/auth-service.service';
+import { CreateOrEditCarDialogComponent } from 'src/app/modules/cars/components/create-or-edit-car-dialog/create-or-edit-car-dialog.component';
+import { AuthService } from 'src/app/core/services/auth.service';
+import { SignalRService } from 'src/app/shared/tools/signalr.service';
+import { RtcConnectionService } from 'src/app/shared/tools/rtc-connection.service';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -16,18 +15,23 @@ import { AuthService } from 'src/app/core/services/auth-service.service';
 })
 export class HomeComponent implements OnInit {
   cars: ICar[] = [];
-  signalR = new SignalR();
   geolocationPosition: GeolocationPosition | undefined;
 
-  constructor(private authService: AuthService, private httpService: HttpService, private dialog: MatDialog) {}
+  constructor(private authService: AuthService, 
+    private httpService: HttpService, 
+    private dialog: MatDialog,
+    private signalRService: SignalRService,
+    private rtcConnectionService: RtcConnectionService
+  ) {}
 
   ngOnInit(): void {
     this.getCars();
     this.getCurrentPosition();
-    this.signalR.connection(this.authService.getToken());
-    this.signalR.listener('ReceiveMessage', (user, message) => {
-      console.log({ user, message });
-    })
+    this.rtcConnectionService.init();
+    // this.signalR.connection(this.authService.getToken());
+    // this.signalR.listener('ReceiveMessage', (user, message) => {
+    //   console.log({ user, message });
+    // })
   }
 
   getCurrentPosition() {
@@ -95,7 +99,6 @@ export class HomeComponent implements OnInit {
   }
 
   sendMessage() {
-    this.signalR.sendMessage('test').then(res => console.log(res));
+    this.signalRService.sendMessage('SendMessage', 'test');
   }
-
 }

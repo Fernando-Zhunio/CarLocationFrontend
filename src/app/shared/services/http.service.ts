@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { IOptionsRequest } from 'src/app/core/types/request';
 import { environment } from 'src/environments/environment';
+import { GenerateGuid } from '../tools/common-tools';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +10,10 @@ import { environment } from 'src/environments/environment';
 export class HttpService {
 
   url = environment.apis.default.url;
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+    if (!localStorage.getItem('key_app')) 
+    localStorage.setItem('key_app', GenerateGuid());
+  }
 
   getBuildUrl(path: string) {
     return this.url+'/' + path;

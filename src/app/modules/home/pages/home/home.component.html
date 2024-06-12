@@ -8,8 +8,14 @@
       <mat-list dense>
         @for (car of cars; track car.id) {
         <mat-list-item>
-          <div class="flex justify-between gap-2">
-            {{ car.plate }} <mat-chip><mat-icon>edit</mat-icon></mat-chip>
+          <div class="flex justify-between items-center gap-2">
+            {{ car.plate }}
+            <div>
+              <button mat-icon-button><mat-icon>edit</mat-icon></button>
+              <a [routerLink]="['/cars',car.id]" mat-icon-button>
+                <mat-icon>visibility</mat-icon>
+              </a>
+            </div>
           </div>
         </mat-list-item>
         <mat-divider></mat-divider>
@@ -40,7 +46,13 @@
         ></mgl-marker>
         }
         <mgl-control mglFullscreen position="top-left"></mgl-control>
-        <mgl-control mglGeolocate [positionOptions]="{ enableHighAccuracy: true }"  [showUserHeading]="true"  (geolocate)="test($event)" position="top-left"></mgl-control>
+        <mgl-control
+          mglGeolocate
+          [positionOptions]="{ enableHighAccuracy: true }"
+          [showUserHeading]="true"
+          (geolocate)="test($event)"
+          position="top-left"
+        ></mgl-control>
         <mgl-control mglNavigation position="top-left"></mgl-control>
         <mgl-control mglScale></mgl-control>
       </mgl-map>

@@ -1,33 +1,17 @@
-import { AccountConfigModule } from '@abp/ng.account/config';
-import { CoreModule } from '@abp/ng.core';
-import { registerLocale } from '@abp/ng.core/locale';
-import { IdentityConfigModule } from '@abp/ng.identity/config';
-import { SettingManagementConfigModule } from '@abp/ng.setting-management/config';
-import { TenantManagementConfigModule } from '@abp/ng.tenant-management/config';
-import { ThemeLeptonXModule } from '@abp/ng.theme.lepton-x';
-import { SideMenuLayoutModule } from '@abp/ng.theme.lepton-x/layouts';
-import { InternetConnectionStatusComponent, ThemeSharedModule } from '@abp/ng.theme.shared';
 import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { environment } from '../environments/environment';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { APP_ROUTE_PROVIDER } from './route.provider';
-import { FeatureManagementModule } from '@abp/ng.feature-management';
-import { AbpOAuthModule } from '@abp/ng.oauth';
-import { AccountLayoutModule } from '@abp/ng.theme.lepton-x/account';
-import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
-import { RouterModule } from '@angular/router';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
-import { AuthService } from './core/services/auth-service.service';
+import { AuthService } from './core/services/auth.service';
 import { Observable, catchError, of, tap } from 'rxjs';
 import { DefaultInterceptorService } from './core/interceptors/default-interceptor.service';
 import { provideNativeDateAdapter } from '@angular/material/core';
+import { CoreService } from './core/services/core.service';
 
-
-function initializeApp(authService: AuthService): () => Observable<any> {
-  return () => authService.verifiedAuth().pipe(
+function initializeApp(coreService: CoreService): () => Observable<any> {
+  return () => coreService.verifiedAuth().pipe(
     tap((res) => {
       console.log({tap: res});
       document.getElementById('init-loader')?.remove();
@@ -44,7 +28,6 @@ function initializeApp(authService: AuthService): () => Observable<any> {
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-    RouterModule,
     HttpClientModule,
     AppRoutingModule,
     // CoreModule.forRoot({
@@ -71,7 +54,7 @@ function initializeApp(authService: AuthService): () => Observable<any> {
       provide: APP_INITIALIZER,
       useFactory: initializeApp,
       multi: true,
-      deps: [AuthService],
+      deps: [CoreService],
     },
     {
       provide: HTTP_INTERCEPTORS,

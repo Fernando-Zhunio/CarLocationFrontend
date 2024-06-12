@@ -1,24 +1,26 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HomeRoutingModule } from './home.routing';
+import { HomeRoutingModule } from '../home/home.routing';
 import { MatListModule } from '@angular/material/list';
-import { HomeComponent } from './pages/home/home.component';
+import { HomeComponent } from '../home/pages/home/home.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import {MatChipsModule} from '@angular/material/chips';
 import { MatDividerModule } from '@angular/material/divider';
 import { NgxMapboxGLModule } from 'ngx-mapbox-gl';
 import { environment } from 'src/environments/environment';
+import { CarIndexComponent } from './pages/car-index/car-index.component';
+import { CarRoutingModule } from './car.routing';
 import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [
-    HomeComponent
+    CarIndexComponent
   ],
   imports: [
     CommonModule,
-    HomeRoutingModule,
-
+    CarRoutingModule,
+    RouterModule,
     // Material
     MatListModule,
     MatButtonModule,
@@ -30,4 +32,4 @@ import { RouterModule } from '@angular/router';
     })
   ]
 })
-export class HomeModule { }
+export class CarModule { }
