@@ -12,6 +12,7 @@ import { environment } from 'src/environments/environment';
 import { CarIndexComponent } from './pages/car-index/car-index.component';
 import { CarRoutingModule } from './car.routing';
 import { RouterModule } from '@angular/router';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { RouterModule } from '@angular/router';
     CommonModule,
     CarRoutingModule,
     RouterModule,
+    FormsModule,
     // Material
     MatListModule,
     MatButtonModule,

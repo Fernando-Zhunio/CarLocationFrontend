@@ -5,7 +5,7 @@ import { HttpService } from 'src/app/shared/services/http.service';
 import { GetToken } from 'src/app/shared/tools/common-tools';
 import { SignalRService } from 'src/app/shared/tools/signalr.service';
 import { IUser } from '../types/user';
-import { catchError, map, of } from 'rxjs';
+import { catchError, map, mergeMap, of } from 'rxjs';
 import { AuthService } from './auth.service';
 import { FastInfo } from '../helpers/fastInfo';
 
@@ -30,7 +30,7 @@ export class CoreService {
     if (GetToken()) {
       return this.http.get(GET_USER_INFO_ENDPOINT)
       .pipe(
-        map(async (res: IUser) => {
+        mergeMap(async (res: IUser) => {
           AuthService.isAuth = true
           FastInfo.Instance.setUser(res);
           await this.initializationIfAuth();

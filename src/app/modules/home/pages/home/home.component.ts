@@ -27,11 +27,14 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
     this.getCars();
     this.getCurrentPosition();
-    this.rtcConnectionService.init();
-    // this.signalR.connection(this.authService.getToken());
-    // this.signalR.listener('ReceiveMessage', (user, message) => {
-    //   console.log({ user, message });
-    // })
+    this.rtcConnectionService.createOffer();
+    this.signalRService.listener('GetAnswer', (sdp, _deviceId) => {
+      console.log('GetAnswer', { sdp, _deviceId });
+      this.rtcConnectionService.getPeerConnection().setRemoteDescription(sdp);
+    });
+    this.rtcConnectionService.onMessageCarLocation((peerConnection: RTCDataChannel, ev: MessageEvent<any>) =>{
+      console.log('onMessageCarLocation', { peerConnection, ev, data: ev.data });
+    })
   }
 
   getCurrentPosition() {
