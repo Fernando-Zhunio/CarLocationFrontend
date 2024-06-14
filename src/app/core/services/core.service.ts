@@ -41,12 +41,12 @@ export class CoreService {
           FastInfo.Instance.setUser(null)
           localStorage.removeItem('access_token')
           this.router.navigate([this.redirectGuestUrl])
-          return of(null)
+          throw error
         })
       )
     } else {
       this.router.navigate([this.redirectGuestUrl])
-      return of(null)
+       throw Error('No eres tu somos nosotros, vuelve a intentarlo');
     }
   }
 

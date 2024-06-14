@@ -15,3 +15,17 @@ export function GetKeyApp() {
 export function GetToken(): string | null {
   return localStorage.getItem('access_token') || null;
 }
+
+export class Logger {
+  static log(message: any, status: 'success' | 'error' = 'success') {
+    if (status === 'success') {
+      console.log(message);
+      return;
+    }
+
+    if (status === 'error') {
+      console.error(message);
+      return;
+    }
+  }
+}

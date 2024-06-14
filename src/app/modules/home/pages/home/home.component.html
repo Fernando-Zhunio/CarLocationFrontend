@@ -6,6 +6,9 @@
     </div>
     <div class="shadow-md rounded-xl p-3">
       <mat-list dense>
+        <mat-list-item (click)="test()">
+          debugger
+        </mat-list-item>
         @for (car of cars; track car.id) {
         <mat-list-item>
           <div class="flex justify-between items-center gap-2">
@@ -50,9 +53,9 @@
           mglGeolocate
           [positionOptions]="{ enableHighAccuracy: true }"
           [showUserHeading]="true"
-          (geolocate)="test($event)"
           position="top-left"
-        ></mgl-control>
+          ></mgl-control>
+          <!-- (geolocate)="test($event)" -->
         <mgl-control mglNavigation position="top-left"></mgl-control>
         <mgl-control mglScale></mgl-control>
       </mgl-map>

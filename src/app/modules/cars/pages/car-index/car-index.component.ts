@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { RtcConnectionService } from 'src/app/shared/tools/rtc-connection.service';
-import { SignalRService } from 'src/app/shared/tools/signalr.service';
+import { RtcConnectionMapService } from 'src/app/shared/tools/rtc-connection-map.service';
+// import { RtcConnectionService } from 'src/app/shared/tools/rtc-connection.service';
+// import { SignalRService } from 'src/app/shared/tools/signalr.service';
 
 @Component({
   // eslint-disable-next-line @angular-eslint/component-selector
@@ -11,27 +12,12 @@ import { SignalRService } from 'src/app/shared/tools/signalr.service';
 export class CarIndexComponent implements OnInit {
   offer: any = null;
   constructor(
-    private signalrService: SignalRService,
-    private rtcConnectionService: RtcConnectionService
+    // private signalrService: SignalRService,
+    private rtcConnectionService: RtcConnectionMapService
   ) {}
 
   ngOnInit(): void {
-    this.handlerOffer();
-    this.signalrService.listener('GetCandidate', (sdp, _deviceId) => {
-      console.log('GetCandidate', { sdp, _deviceId });
-      debugger
-      this.rtcConnectionService.setCandidate(sdp);
-    });
-    this.rtcConnectionService.generateChannelForMessages();
-    this.rtcConnectionService.handlerCandidate();
-  }
-
-  handlerOffer() {
-    this.signalrService.listener('GetOffer', (sdp, idApp) => {
-      console.log('GetOffer', { sdp, idApp });
-      this.offer = { sdp, idApp };
-      this.rtcConnectionService.createAnswer(sdp);
-    });
+    this.rtcConnectionService.communicationOtherServer();
   }
 
   message: string = '';

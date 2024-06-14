@@ -25,6 +25,8 @@ export class LoginComponent {
       this.form.markAllAsTouched();
       return;
     }
-    this.authService.login(this.form.value as any).subscribe();
+    this.authService.login(this.form.value as any).subscribe(
+      () => this.router.navigate(['/']),
+    );
   }
 }

@@ -7,7 +7,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { CreateOrEditCarDialogComponent } from 'src/app/modules/cars/components/create-or-edit-car-dialog/create-or-edit-car-dialog.component';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { SignalRService } from 'src/app/shared/tools/signalr.service';
-import { RtcConnectionService } from 'src/app/shared/tools/rtc-connection.service';
+import { RtcConnectionMapService } from 'src/app/shared/tools/rtc-connection-map.service';
+// import { RtcConnectionService } from 'src/app/shared/tools/rtc-connection.service';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -21,20 +22,13 @@ export class HomeComponent implements OnInit {
     private httpService: HttpService, 
     private dialog: MatDialog,
     private signalRService: SignalRService,
-    private rtcConnectionService: RtcConnectionService
+    private rtcConnectionService: RtcConnectionMapService
   ) {}
 
   ngOnInit(): void {
     this.getCars();
     this.getCurrentPosition();
-    this.rtcConnectionService.createOffer();
-    this.signalRService.listener('GetAnswer', (sdp, _deviceId) => {
-      console.log('GetAnswer', { sdp, _deviceId });
-      this.rtcConnectionService.getPeerConnection().setRemoteDescription(sdp);
-    });
-    this.rtcConnectionService.onMessageCarLocation((peerConnection: RTCDataChannel, ev: MessageEvent<any>) =>{
-      console.log('onMessageCarLocation', { peerConnection, ev, data: ev.data });
-    })
+    this.rtcConnectionService.communicationOtherServer();
   }
 
   getCurrentPosition() {
@@ -74,8 +68,9 @@ export class HomeComponent implements OnInit {
     });
   }
 
-  test(option: any) {
-    console.log({ option });
+  test() {
+    debugger
+    //console.log({ option });
   }
 
   openCreateOrEditDialog(id: string | null = null) {

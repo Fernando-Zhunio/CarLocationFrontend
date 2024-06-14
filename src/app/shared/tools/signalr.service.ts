@@ -44,11 +44,10 @@ export class SignalRService {
   }
 
   sendMessage(method: string, message: any) {
-    const id = localStorage.getItem('key_id');
     return this.hubConnection.invoke(method, message, GetKeyApp());
   }
 
-  listener(onMethod: string, onCallback: (user: any, message: any) => void) {
+  on(onMethod: string, onCallback: (user: any, message: any) => void) {
     this.hubConnection.on(onMethod, onCallback);
   }
 }

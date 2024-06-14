@@ -57,8 +57,7 @@ export class AuthService {
     }).pipe(
       mergeMap((res) => {
         localStorage.setItem('access_token', res['access_token']);
-        //this.token = res['access_token'];
-        AuthService.isAuth = true
+        //AuthService.isAuth = true
         return this.coreService.verifiedAuth();
       }),
     );
